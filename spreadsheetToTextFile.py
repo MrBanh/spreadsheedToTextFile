@@ -16,16 +16,21 @@ def spreadsheetToTextFile(excelFile):
     
     # Validates if files exist
     try:
+        # Loads the excel file and assigns the active sheet to a variable
         wb = openpyxl.load_workbook(excelFile)
         sheet = wb.active
 
+        # Loop through each column
         for colNum in range(1, sheet.max_column + 1):
-
+            # Creates a text file in write mode
             txtFile = open(f'spreadsheetToTextFile_{colNum}.txt', 'w')
 
+            # Loops through every row in each column
             for rowNum in range(1, sheet.max_row + 1):
+                # Extract the cells in each column and writes it to the text file. Each cell is a line in the text file
                 txtFile.write(f'{sheet[get_column_letter(colNum) + str(rowNum)].value}\n')
 
+            # Close the text file so we can create another text file for the next column
             txtFile.close()
 
     except FileNotFoundError as notFoundError:
